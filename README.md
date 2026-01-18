@@ -50,8 +50,26 @@ A full-stack web application where users can rate images, leave comments, and vi
 ## 📁 Project Structure
 
 ```
-RATING/
-├── client/                  # Frontend React app
+IMAGERATING/
+├── backend/                 # Express.js backend API
+│   ├── config/
+│   │   └── passport.js      # Google OAuth configuration
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   └── ratingController.js
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   ├── models/
+│   │   ├── User.js
+│   │   └── Rating.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   └── ratingRoutes.js
+│   ├── server.js
+│   ├── package.json
+│   ├── vercel.json
+│   └── .env
+├── frontend/                # React frontend app
 │   ├── public/
 │   │   └── index.html
 │   ├── src/
@@ -76,24 +94,11 @@ RATING/
 │   │   ├── index.js
 │   │   └── index.css
 │   ├── package.json
-│   └── tailwind.config.js
-├── config/
-│   └── passport.js          # Google OAuth configuration
-├── controllers/
-│   ├── authController.js
-│   └── ratingController.js
-├── middleware/
-│   └── authMiddleware.js
-├── models/
-│   ├── User.js
-│   └── Rating.js
-├── routes/
-│   ├── authRoutes.js
-│   └── ratingRoutes.js
-├── server.js
-├── package.json
-├── vercel.json
-└── .env.example
+│   ├── tailwind.config.js
+│   └── vercel.json
+├── install.bat              # Install all dependencies
+├── start.bat                # Start both servers
+└── README.md
 ```
 
 ## 🔧 Installation & Setup
@@ -103,11 +108,29 @@ RATING/
 - MongoDB Atlas account or local MongoDB
 - Google OAuth credentials (Client ID & Secret)
 
-### Backend Setup
+### Quick Start (Recommended)
 
-1. Navigate to the RATING directory:
+1. Run the installation script:
 ```bash
-cd RATING
+install.bat
+```
+
+2. Start both servers:
+```bash
+start.bat
+```
+
+The application will open automatically:
+- Frontend: http://localhost:3001
+- Backend: http://localhost:5001
+
+### Manual Setup
+
+#### Backend Setup
+
+1. Navigate to the backend directory:
+```bash
+cd backend
 ```
 
 2. Install dependencies:
@@ -115,37 +138,31 @@ cd RATING
 npm install
 ```
 
-3. Create `.env` file from `.env.example`:
-```bash
-cp .env.example .env
-```
-
-4. Configure environment variables in `.env`:
+3. The `.env` file is already configured for local development.
+   Update if needed:
 ```env
-PORT=5000
-MONGODB_URI=your_mongodb_connection_string
+PORT=5001
+MONGODB_URI=mongodb://localhost:27017/imagerating-new
 JWT_SECRET=your_jwt_secret_key_here
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
-GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
-FRONTEND_URL=http://localhost:3000
+GOOGLE_CALLBACK_URL=http://localhost:5001/api/auth/google/callback
+FRONTEND_URL=http://localhost:3001
 SESSION_SECRET=your_session_secret
 ```
 
-5. Start the backend server:
+4. Start the backend server:
 ```bash
 npm start
-# or for development with auto-reload
-npm run dev
 ```
 
-Backend will run on `http://localhost:5000`
+Backend will run on `http://localhost:5001`
 
-### Frontend Setup
+#### Frontend Setup
 
-1. Navigate to the client directory:
+1. Navigate to the frontend directory:
 ```bash
-cd client
+cd frontend
 ```
 
 2. Install dependencies:
@@ -153,22 +170,17 @@ cd client
 npm install
 ```
 
-3. Create `.env` file from `.env.example`:
-```bash
-cp .env.example .env
-```
-
-4. Configure environment variables in `.env`:
+3. The `.env` file is already configured. Update if needed:
 ```env
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=http://localhost:5001/api
 ```
 
-5. Start the React development server:
+4. Start the React development server:
 ```bash
 npm start
 ```
 
-Frontend will run on `http://localhost:3000`
+Frontend will run on `http://localhost:3001`
 
 ## 🔐 Google OAuth Setup
 
@@ -178,9 +190,9 @@ Frontend will run on `http://localhost:3000`
 4. Go to Credentials → Create Credentials → OAuth 2.0 Client ID
 5. Configure OAuth consent screen
 6. Add authorized redirect URIs:
-   - `http://localhost:5000/api/auth/google/callback` (development)
-   - `https://your-domain.vercel.app/api/auth/google/callback` (production)
-7. Copy Client ID and Client Secret to `.env` file
+   - `http://localhost:5001/api/auth/google/callback` (development)
+   - `https://your-backend.vercel.app/api/auth/google/callback` (production)
+7. Copy Client ID and Client Secret to backend `.env` file
 
 ## 🗄️ Database Schema
 

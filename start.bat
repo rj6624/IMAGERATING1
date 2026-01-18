@@ -7,13 +7,13 @@ start "MongoDB" cmd /c "echo MongoDB should be running on mongodb://localhost:27
 
 echo.
 echo Starting Backend Server...
-start "Backend Server" cmd /k "cd /d %~dp0 && npm start"
+start "Backend Server" cmd /k "cd /d %~dp0backend && npm start"
 
 timeout /t 3 /nobreak >nul
 
 echo.
 echo Starting Frontend Development Server...
-start "Frontend Server" cmd /k "cd /d %~dp0client && npm start"
+start "Frontend Server" cmd /k "cd /d %~dp0frontend && npm start"
 
 echo.
 echo ========================================

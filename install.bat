@@ -3,7 +3,7 @@ echo Installing Image Rating Platform Dependencies...
 echo.
 
 echo Installing Backend Dependencies...
-cd "%~dp0"
+cd "%~dp0backend"
 call npm install
 if errorlevel 1 (
     echo Backend installation failed!
@@ -13,7 +13,7 @@ if errorlevel 1 (
 
 echo.
 echo Installing Frontend Dependencies...
-cd client
+cd ..\frontend
 call npm install
 if errorlevel 1 (
     echo Frontend installation failed!
